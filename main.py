@@ -1,3 +1,7 @@
+from __future__ import (division,
+                        with_statement,
+                        print_function,
+                        unicode_literals)
 import sys
 import pygame
 
