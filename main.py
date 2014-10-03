@@ -20,25 +20,67 @@ def is_within(coords, rect):
     else:
         return False
 
+class BallGame:
+    def __init__(self):
+        self.window = pygame.display.set_mode((640, 480))
+        self.ballimg = pygame.image.load("ball.gif")
+        self.ballbounds = self.ballimg.get_rect()
+        self.myfont = pygame.font.SysFont(None, 180)
+
+        self.direction = 1
+
+        self.variable_clock_frame_skip = 10
+        self.physics_clock_frame_skip = 9
+
+
+    def update(self):
+        self.update_ball()
+        self.redraw()
+
+
+    def redraw(self):
+        self.window.fill((0, 0, 0))
+        self.window.blit(self.ballimg, self.ballbounds)
+        pygame.display.flip()
+
+
+    def make_label(self, string):
+        return self.myfont.render(string, 1, (255, 255, 0))
+
+
+    def centre(self):
+        return (self.window.get_width()/2,
+                self.window.get_height()/2)
+
+
+    def show_text(self, text):
+        label = ballGame.make_label(text)
+        self.window.blit(label,
+                    top_left_coord_of_object_where_mid_is(self.myfont.size(text), self.centre()))
+
+
+    def update_ball(self):
+        if self.ball_at_edge():
+            self.reverse_ball()
+        self.ballbounds = self.ballbounds.move([self.direction*5, 0])
+
+
+    def ball_at_edge(self):
+        return self.ballbounds[0] + self.ballbounds[2] > 640 or self.ballbounds[0] < 0
+
+
+    def reverse_ball(self):
+        self.direction *= -1
+
+
 if __name__ == '__main__':
     pygame.init()
-    window = pygame.display.set_mode((640, 480))
-    ballimg = pygame.image.load("ball.gif")
-    ballrect = ballimg.get_rect()
-    myfont = pygame.font.SysFont(None, 180)
 
-    direction = 1
-
-    variable_clock_frame_skip = 10
-    physics_clock_frame_skip = 9
-    clock_count = 0
+    ballGame = BallGame()
 
     # input handling (somewhat boilerplate code):
     while True:
-        clock_count += 1
         break_this = False
-        if clock_count == variable_clock_frame_skip * physics_clock_frame_skip:
-            clock_count = 0
 
         pygame.time.wait(10)
         for event in pygame.event.get():
@@ -52,25 +94,14 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     cursor_coors = pygame.mouse.get_pos()
-                    if is_within(cursor_coors, ballrect):
-                        label = myfont.render("WINNER!", 1, (255, 255, 0))
-
-                        center = (window.get_width()/2,
-                                  window.get_height()/2)
-
-                        window.blit(label,
-                                    top_left_coord_of_object_where_mid_is(myfont.size("WINNER!"), center))
+                    if is_within(cursor_coors, ballGame.ballbounds):
+                        win_text = "WINNER!"
+                        ballGame.show_text(win_text)
                         break_this = True
         if break_this:
             break
 
-        if ballrect[0] + ballrect[2] > 640 or ballrect[0] < 0:
-            direction *= -1
-        ballrect = ballrect.move([direction*5, 0])
-
-        window.fill((0, 0, 0))
-        window.blit(ballimg, ballrect)
-        pygame.display.flip()
+        ballGame.update()
 
     while True:
         for event in pygame.event.get():
