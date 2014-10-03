@@ -24,6 +24,7 @@ def is_within(coords, rect):
     else:
         return False
 
+
 class BallGame:
     def __init__(self):
         self.window = pygame.display.set_mode((640, 480))
@@ -36,45 +37,42 @@ class BallGame:
         self.variable_clock_frame_skip = 10
         self.physics_clock_frame_skip = 9
 
-
     def update(self):
         self.update_ball()
         self.redraw()
-
 
     def redraw(self):
         self.window.fill((0, 0, 0))
         self.window.blit(self.ballimg, self.ballbounds)
         pygame.display.flip()
 
-
     def make_label(self, string):
         return self.myfont.render(string, 1, (255, 255, 0))
-
 
     def centre(self):
         return (self.window.get_width()/2,
                 self.window.get_height()/2)
 
-
     def show_text(self, text):
         label = ballGame.make_label(text)
-        self.window.blit(label,
-                    top_left_coord_of_object_where_mid_is(self.myfont.size(text), self.centre()))
-
+        self.window.blit(
+            label,
+            top_left_coord_of_object_where_mid_is(
+                self.myfont.size(text),
+                self.centre()))
 
     def update_ball(self):
         if self.ball_at_edge():
             self.reverse_ball()
         self.ballbounds = self.ballbounds.move([self.direction*5, 0])
 
-
     def ball_at_edge(self):
-        return self.ballbounds[0] + self.ballbounds[2] > 640 or self.ballbounds[0] < 0
-
+        return (self.ballbounds[0] + self.ballbounds[2] > 640 or
+                self.ballbounds[0] < 0)
 
     def reverse_ball(self):
         self.direction *= -1
+
 
 def quit_if_escape(event):
     if event.type == pygame.QUIT:
