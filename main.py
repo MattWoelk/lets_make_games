@@ -1,3 +1,7 @@
+from __future__ import (division,
+                        with_statement,
+                        print_function,
+                        unicode_literals)
 import sys
 import pygame
 
@@ -72,6 +76,14 @@ class BallGame:
     def reverse_ball(self):
         self.direction *= -1
 
+def quit_if_escape(event):
+    if event.type == pygame.QUIT:
+        sys.exit(0)
+
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_ESCAPE:
+            sys.exit(0)
+
 
 if __name__ == '__main__':
     pygame.init()
@@ -84,12 +96,7 @@ if __name__ == '__main__':
 
         pygame.time.wait(10)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    sys.exit()
+            quit_if_escape(event)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -105,10 +112,5 @@ if __name__ == '__main__':
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    sys.exit()
+            quit_if_escape(event)
         pygame.display.flip()
