@@ -45,7 +45,6 @@ class BallGame:
     def redraw(self):
         self.window.fill((0, 0, 0))
         self.window.blit(self.ballimg, self.ballbounds)
-        pygame.display.flip()
 
 
     def make_label(self, string):
@@ -109,6 +108,7 @@ if __name__ == '__main__':
             break
 
         ballGame.update()
+        pygame.display.flip()
 
     while True:
         for event in pygame.event.get():
