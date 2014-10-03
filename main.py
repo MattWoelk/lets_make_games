@@ -20,6 +20,16 @@ def is_within(coords, rect):
     else:
         return False
 
+
+def quit_if_escape(event):
+    if event.type == pygame.QUIT:
+        sys.exit(0)
+
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_ESCAPE:
+            sys.exit(0)
+
+
 if __name__ == '__main__':
     pygame.init()
     window = pygame.display.set_mode((640, 480))
@@ -42,12 +52,7 @@ if __name__ == '__main__':
 
         pygame.time.wait(10)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    sys.exit()
+            quit_if_escape(event)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
@@ -74,10 +79,5 @@ if __name__ == '__main__':
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    sys.exit()
+            quit_if_escape(event)
         pygame.display.flip()
