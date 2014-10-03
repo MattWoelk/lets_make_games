@@ -33,12 +33,14 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit(0)
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     sys.exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    cursor_coors = pygame.mouse.get_pos();
+                    cursor_coors = pygame.mouse.get_pos()
                     if is_within(cursor_coors, ballrect):
                         print(":O")
 
