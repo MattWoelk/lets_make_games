@@ -6,9 +6,10 @@
         [can't] returns framebuffer
     [done] all state is stored in that object
     [done] can be deleted, and all its innards are deleted
+    [done] make sure it only takes input from its function args!
     [] make sure that object has NO SIDE EFFECTS
         other than debug output, of course
-    [] make sure it only takes input from its function args!
+    [] get rid of magic values
     [] make any functions static that don't need to use the objects data specifically.
     [] The win state needs to be sent out somehow
         Maybe a function is passed into the object, and that function is called on win state?

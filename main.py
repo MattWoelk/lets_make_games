@@ -27,41 +27,40 @@ def is_within(coords, rect):
 
 class BallGame:
     def __init__(self):
-        self.window = pygame.display.set_mode((640, 480))
         self.ballimg = pygame.image.load("ball.gif")
         self.ballbounds = self.ballimg.get_rect()
         self.myfont = pygame.font.SysFont(None, 180)
         self.direction = 1
         self.win_state = False
 
-    def update(self, surface, inputs):
+    def update(self, surface, events):
         self.update_ball()
         self.redraw(surface)
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 cursor_coors = pygame.mouse.get_pos()
                 if is_within(cursor_coors, self.ballbounds):
-                    self.show_text("WINNER!")
+                    self.show_text("WINNER!", surface)
                     self.win_state = True
 
     def redraw(self, surface):
-        self.window.fill((0, 0, 0))
+        surface.fill((0, 0, 0))
         surface.blit(self.ballimg, self.ballbounds)
 
     def make_label(self, string):
         return self.myfont.render(string, 1, (255, 255, 0))
 
-    def centre(self):
-        return (self.window.get_width()/2,
-                self.window.get_height()/2)
+    def centre(self, surface):
+        return (surface.get_width()/2,
+                surface.get_height()/2)
 
-    def show_text(self, text):
+    def show_text(self, text, surface):
         label = ballGame.make_label(text)
-        self.window.blit(
+        surface.blit(
             label,
             top_left_coord_of_object_where_mid_is(
                 self.myfont.size(text),
-                self.centre()))
+                self.centre(surface)))
 
     def update_ball(self):
         if self.ball_at_edge():
@@ -87,6 +86,7 @@ def quit_if_escape(event):
 
 if __name__ == '__main__':
     pygame.init()
+    pygame.display.set_mode((640, 480))
 
     ballGame = BallGame()
 
