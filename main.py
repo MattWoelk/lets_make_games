@@ -35,16 +35,14 @@ class BallGame:
         self.win_state = False
 
     def update(self, surface, inputs):
+        self.update_ball()
         self.redraw(surface)
         for event in events:
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    cursor_coors = pygame.mouse.get_pos()
-                    if is_within(cursor_coors, self.ballbounds):
-                        print("!")
-                        self.show_text("WINNER!")
-                        self.win_state = True
-        self.update_ball()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                cursor_coors = pygame.mouse.get_pos()
+                if is_within(cursor_coors, self.ballbounds):
+                    self.show_text("WINNER!")
+                    self.win_state = True
 
     def redraw(self, surface):
         self.window.fill((0, 0, 0))
