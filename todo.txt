@@ -1,10 +1,11 @@
 [] modularize everything until it has the following interface:
     [done] initialized as an object
+    [] has an update function which is sent a framebuffer and returns a framebuffer
+        framebuffer is 'screen' ?
+        [done] takes in framebuffer, and inputs
+        [] returns framebuffer
     [] all state is stored in that object
     [] can be deleted, and all its innards are deleted
-    [] has an update function which is sent a framebuffer and returns a framebuffer
-        [] takes in framebuffer, and inputs
-        [] returns framebuffer
     [] make sure that object has NO SIDE EFFECTS
         other than debug output, of course
     [] The win state needs to be sent out somehow

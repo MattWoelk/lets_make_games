@@ -31,19 +31,24 @@ class BallGame:
         self.ballimg = pygame.image.load("ball.gif")
         self.ballbounds = self.ballimg.get_rect()
         self.myfont = pygame.font.SysFont(None, 180)
-
         self.direction = 1
+        self.win_state = False
 
-        self.variable_clock_frame_skip = 10
-        self.physics_clock_frame_skip = 9
-
-    def update(self):
+    def update(self, surface, inputs):
+        self.redraw(surface)
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    cursor_coors = pygame.mouse.get_pos()
+                    if is_within(cursor_coors, self.ballbounds):
+                        print("!")
+                        self.show_text("WINNER!")
+                        self.win_state = True
         self.update_ball()
-        self.redraw()
 
-    def redraw(self):
+    def redraw(self, surface):
         self.window.fill((0, 0, 0))
-        self.window.blit(self.ballimg, self.ballbounds)
+        surface.blit(self.ballimg, self.ballbounds)
 
     def make_label(self, string):
         return self.myfont.render(string, 1, (255, 255, 0))
@@ -92,20 +97,14 @@ if __name__ == '__main__':
         break_this = False
 
         pygame.time.wait(10)
-        for event in pygame.event.get():
+        events = pygame.event.get()
+        for event in events:
             quit_if_escape(event)
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    cursor_coors = pygame.mouse.get_pos()
-                    if is_within(cursor_coors, ballGame.ballbounds):
-                        win_text = "WINNER!"
-                        ballGame.show_text(win_text)
-                        break_this = True
-        if break_this:
+        ballGame.update(pygame.display.get_surface(),
+                        events)
+        if ballGame.win_state:
             break
-
-        ballGame.update()
         pygame.display.flip()
 
     while True:
