@@ -7,9 +7,12 @@
     [done] all state is stored in that object
     [done] can be deleted, and all its innards are deleted
     [done] make sure it only takes input from its function args!
-    [] make sure that object has NO SIDE EFFECTS
+    [done] make sure that object has NO SIDE EFFECTS
         other than debug output, of course
-    [] get rid of magic values
+        anything that takes 'surface' has the side effect of modifying surface
+            this will have to be good enough.
+        Also, internally it has a ton of side effects, but that's okay because it's an object and we expect that.
+    [done] get rid of magic values
     [] make any functions static that don't need to use the objects data specifically.
     [] The win state needs to be sent out somehow
         Maybe a function is passed into the object, and that function is called on win state?

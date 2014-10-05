@@ -11,6 +11,13 @@ def top_left_coord_of_object_where_mid_is(text_object_size, mid_coords):
             mid_coords[1] - (text_object_size[1]/2))
 
 
+def inner_intersects_outer(inner, outer):
+    return (inner[0] + inner[2] > outer[2] or
+            inner[0] < outer[0] or
+            inner[1] + inner[3] > outer[3] or
+            inner[1] < outer[1])
+
+
 def middle_coords_of_text(text_object):
     pass
 
@@ -34,7 +41,7 @@ class BallGame:
         self.win_state = False
 
     def update(self, surface, events):
-        self.update_ball()
+        self.update_ball(surface)
         self.redraw(surface)
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -62,14 +69,11 @@ class BallGame:
                 self.myfont.size(text),
                 self.centre(surface)))
 
-    def update_ball(self):
-        if self.ball_at_edge():
+    def update_ball(self, surface):
+        if inner_intersects_outer(inner=self.ballbounds,
+                                  outer=surface.get_rect()):
             self.reverse_ball()
         self.ballbounds = self.ballbounds.move([self.direction*5, 0])
-
-    def ball_at_edge(self):
-        return (self.ballbounds[0] + self.ballbounds[2] > 640 or
-                self.ballbounds[0] < 0)
 
     def reverse_ball(self):
         self.direction *= -1
