@@ -109,7 +109,23 @@ if __name__ == '__main__':
             break
         pygame.display.flip()
 
+    ballGame = BallGame()
+
     while True:
+        pygame.time.wait(10)
+        events = pygame.event.get()
+        for event in events:
+            quit_if_escape(event)
+        ballGame.update(pygame.display.get_surface(),
+                        events)
+        if ballGame.win_state:
+            break
+        pygame.display.flip()
+
+    pygame.time.wait(2000)
+
+    while True:
+        pygame.time.wait(10)
         for event in pygame.event.get():
             quit_if_escape(event)
         pygame.display.flip()
