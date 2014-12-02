@@ -4,6 +4,8 @@ from __future__ import (division,
                         unicode_literals)
 import sys
 import pygame
+import cairo
+from math import pi
 
 
 def top_left_coord_of_object_where_mid_is(text_object_size, mid_coords):
@@ -92,9 +94,17 @@ if __name__ == '__main__':
     pygame.init()
     pygame.display.set_mode((640, 480))
 
-    ballGame = BallGame()
+    surface = cairo.SVGSurface('test.svg', 600, 400)
+    cr = cairo.Context(surface)
+    cr.scale(600, 400)
+    cr.set_line_width(0.1)
+    cr.set_source_rgb(0, 0, 0)
+    cr.rectangle(0.25, 0.25, 0.5, 0.5)
+    cr.stroke()
 
-    # input handling (somewhat boilerplate code):
+    #ballGame = BallGame()
+
+    ## input handling (somewhat boilerplate code):
     while True:
         break_this = False
 
@@ -103,29 +113,29 @@ if __name__ == '__main__':
         for event in events:
             quit_if_escape(event)
 
-        ballGame.update(pygame.display.get_surface(),
-                        events)
-        if ballGame.win_state:
-            break
-        pygame.display.flip()
+    #    ballGame.update(pygame.display.get_surface(),
+    #                    events)
+    #    if ballGame.win_state:
+    #        break
+    #    pygame.display.flip()
 
-    ballGame = BallGame()
+    #ballGame = BallGame()
 
-    while True:
-        pygame.time.wait(10)
-        events = pygame.event.get()
-        for event in events:
-            quit_if_escape(event)
-        ballGame.update(pygame.display.get_surface(),
-                        events)
-        if ballGame.win_state:
-            break
-        pygame.display.flip()
+    #while True:
+    #    pygame.time.wait(10)
+    #    events = pygame.event.get()
+    #    for event in events:
+    #        quit_if_escape(event)
+    #    ballGame.update(pygame.display.get_surface(),
+    #                    events)
+    #    if ballGame.win_state:
+    #        break
+    #    pygame.display.flip()
 
-    pygame.time.wait(2000)
+    #pygame.time.wait(2000)
 
-    while True:
-        pygame.time.wait(10)
-        for event in pygame.event.get():
-            quit_if_escape(event)
-        pygame.display.flip()
+    #while True:
+    #    pygame.time.wait(10)
+    #    for event in pygame.event.get():
+    #        quit_if_escape(event)
+    #    pygame.display.flip()

@@ -16,3 +16,4 @@
     [] make any functions static that don't need to use the objects data specifically.
     [] The win state needs to be sent out somehow
         Maybe a function is passed into the object, and that function is called on win state?
+[] Switch everything over to sdl + cairo
